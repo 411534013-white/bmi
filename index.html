@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BMI 計算機</title>
+<style>
+  body { font-family: "Segoe UI", "Microsoft JhengHei", sans-serif; max-width: 480px; margin: 40px auto; padding: 0 16px; color: #16343b; background: #fffdf8; }
+  h1 { font-size: 1.6rem; }
+  label { display: block; margin: 12px 0 4px; font-weight: 700; }
+  input { width: 100%; padding: 8px; font-size: 1rem; box-sizing: border-box; }
+  button { margin-top: 16px; padding: 10px 20px; font-size: 1rem; background: #087e8b; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
+  #result { margin-top: 20px; padding: 12px; border: 2px solid #cbded9; border-radius: 10px; background: #edf7f3; min-height: 3em; }
+  #bmi { font-size: 1.4rem; font-weight: 700; }
+  .note { font-size: .85rem; color: #526b70; }
+</style>
+</head>
+<body>
+  <h1>BMI 計算機</h1>
+  <p class="note">輸入身高（公分）與體重（公斤），算出 BMI 與分級。</p>
+
+  <label for="height">身高（公分）</label>
+  <input id="height" type="number" min="50" max="250" placeholder="例如 170">
+
+  <label for="weight">體重（公斤）</label>
+  <input id="weight" type="number" min="10" max="300" placeholder="例如 65">
+
+  <button id="calc" type="button">計算 BMI</button>
+
+  <div id="result"><span class="note">按下「計算 BMI」後顯示結果。</span></div>
+
+<script>
+  function grade(bmi) {
+    if (bmi < 18.5) return "過輕";
+    if (bmi < 24) return "健康體位";
+    if (bmi < 27) return "過重";
+    return "肥胖";
+  }
+  document.getElementById("calc").addEventListener("click", function () {
+    var h = parseFloat(document.getElementById("height").value);
+    var w = parseFloat(document.getElementById("weight").value);
+    var box = document.getElementById("result");
+    if (!h || !w || h <= 0 || w <= 0) {
+      box.innerHTML = '<span class="note">請輸入有效的身高與體重。</span>';
+      return;
+    }
+    var bmi = w / Math.pow(h / 100, 2);
+    box.innerHTML = '你的 BMI 是 <span id="bmi">' + bmi.toFixed(1) + '</span><br>分級：' + grade(bmi);
+  });
+</script>
+</body>
+</html>
